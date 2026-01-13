@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import apiClient from '../api/apiClient';
 
 const ProductContext = createContext();
-const API = import.meta.env.VITE_API_URL;
+
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,12 +11,8 @@ export const ProductProvider = ({ children }) => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API}/products`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch products');
-      }
-      const data = await response.json();
-      setProducts(data);
+      const response = await apiClient.get('/products');
+      setProducts(response.data);
       setError(null);
     } catch (err) {
       setError(err.message);

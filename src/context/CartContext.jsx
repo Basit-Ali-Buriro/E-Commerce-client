@@ -1,10 +1,9 @@
 // src/context/CartContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import apiClient from "../api/apiClient";
 import { useAuth } from "./AuthContext";
 
 const CartContext = createContext();
-const API = import.meta.env.VITE_API_URL || "";
 
 const isValidObjectId = (id) => {
   return typeof id === "string" && /^[0-9a-fA-F]{24}$/.test(id);
@@ -63,10 +62,7 @@ export function CartProvider({ children }) {
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("authToken");
-      const res = await axios.get(`${API}/cart`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await apiClient.get('/cart');
       const items = normalizeBackendItems(res.data);
       setCartItems(items);
       setTotal(res.data.total ?? calculateTotal(items));
@@ -140,11 +136,9 @@ export function CartProvider({ children }) {
     // Call backend
     try {
       setLoading(true);
-      const token = localStorage.getItem("authToken");
-      const res = await axios.post(
-        `${API}/cart/add`,
-        { productId, quantity }, // EXACT keys backend expects
-        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
+      const res = await apiClient.post(
+        '/cart/add',
+        { productId, quantity } // EXACT keys backend expects
       );
 
       const items = normalizeBackendItems(res.data);
@@ -179,11 +173,9 @@ export function CartProvider({ children }) {
     }
 
     try {
-      const token = localStorage.getItem("authToken");
-      const res = await axios.put(
-        `${API}/cart/update`,
-        { productId, quantity },
-        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
+      const res = await apiClient.put(
+        '/cart/update',
+        { productId, quantity }
       );
       const items = normalizeBackendItems(res.data);
       setCartItems(items);
@@ -208,10 +200,8 @@ export function CartProvider({ children }) {
     }
 
     try {
-      const token = localStorage.getItem("authToken");
-      const res = await axios.delete(`${API}/cart/remove`, {
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-        data: { productId }, // backend expects productId in body
+      const res = await apiClient.delete('/cart/remove', {
+        data: { productId } // backend expects productId in body
       });
       const items = normalizeBackendItems(res.data);
       setCartItems(items);
@@ -230,10 +220,7 @@ export function CartProvider({ children }) {
     if (!isAuthenticated) return;
 
     try {
-      const token = localStorage.getItem("authToken");
-      await axios.delete(`${API}/cart/clear`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await apiClient.delete('/cart/clear');
     } catch (err) {
       console.error("Error clearing cart:", err.response?.data ?? err.message);
       fetchCart();

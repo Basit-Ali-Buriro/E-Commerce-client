@@ -1,6 +1,6 @@
 // src/context/AuthContext.js
 import { createContext, useState, useContext, useEffect } from "react";
-import axios from "axios";
+import apiClient from "../api/apiClient";
 
 const AuthContext = createContext();
 
@@ -14,10 +14,8 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token) {
-      axios
-        .get("/api/users/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
+      apiClient
+        .get("/users/me")
         .then((res) => {
           setUser(res.data);
           setIsAuthenticated(true);
@@ -34,10 +32,8 @@ export function AuthProvider({ children }) {
     localStorage.setItem("authToken", token);
     setIsAuthenticated(true);
     // Fetch user details after login
-    axios
-      .get("/api/users/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+    apiClient
+      .get("/users/me")
       .then((res) => setUser(res.data))
       .catch(() => setUser(null));
   };

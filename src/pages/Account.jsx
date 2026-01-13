@@ -1,10 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
+import apiClient from "../api/apiClient";
 import { FiEye, FiEyeOff, FiUser, FiMail, FiLock, FiCheck } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext"; // Import auth context
 import { useNavigate } from "react-router-dom";
-
-const API = import.meta.env.VITE_API_URL;
 
 const Account = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -69,8 +67,8 @@ const Account = () => {
     try {
       if (isLogin) {
         // LOGIN
-        const res = await axios.post(
-          `${API}/users/login`,
+        const res = await apiClient.post(
+          '/users/login',
           { email: formData.email, password: formData.password },
           { withCredentials: true }
         );
@@ -82,8 +80,8 @@ const Account = () => {
         setTimeout(() => navigate("/"), 1500);
       } else {
         // SIGNUP - Using /users/register endpoint
-        const res = await axios.post(
-          `${API}/users/register`,
+        const res = await apiClient.post(
+          '/users/register',
           { 
             name: formData.name, 
             email: formData.email, 

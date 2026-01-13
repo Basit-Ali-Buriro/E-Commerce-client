@@ -11,11 +11,7 @@ import {
   FiX,
   FiChevronDown, // Import FiChevronDown
 } from "react-icons/fi";
-import axios from "axios";
-
-// This is a placeholder for your environment variable.
-// In a real project, this would be defined in a .env file.
-const API = import.meta.env.VITE_API_URL;
+import apiClient from "../../api/apiClient";
 
 const CreateProduct = () => {
   const [formData, setFormData] = useState({
@@ -129,17 +125,17 @@ const CreateProduct = () => {
       const token = adminInfo?.token;
 
       try {
-        const res = await axios.post(`${API}/products`, payload, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await apiClient.post('/products', payload, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-        alert("✅ Product created successfully!");
-        console.log(res.data);
-        // Reset form after success
-        setFormData({
+        alert("✅ Product created successfully!");
+        console.log(res.data);
+        // Reset form after success
+        setFormData({
           name: "",
           description: "",
           price: "",

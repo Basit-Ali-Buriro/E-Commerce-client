@@ -5,9 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext'; // Import the cart context
 import { useOrders } from '../context/OrderContext';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
-
-const API = import.meta.env.VITE_API_URL || "";
+import apiClient from '../api/apiClient';
 
 const CheckOutPage = () => {
   const [activeStep, setActiveStep] = useState(1);
@@ -120,16 +118,9 @@ const CheckOutPage = () => {
       }
 
       // Create Stripe checkout session
-      const token = localStorage.getItem('authToken');
-      const response = await axios.post(
-        `${API}/stripe/create-checkout-session`,
-        { orderId: order._id },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        }
+      const response = await apiClient.post(
+        '/stripe/create-checkout-session',
+        { orderId: order._id }
       );
 
       if (response.data.url) {

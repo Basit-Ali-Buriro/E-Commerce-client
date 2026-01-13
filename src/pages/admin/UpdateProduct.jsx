@@ -14,11 +14,7 @@ import {
   FiArrowLeft,
   FiLoader,
 } from "react-icons/fi";
-import axios from "axios";
-
-// This is a placeholder for your environment variable.
-// In a real project, this would be defined in a .env file.
-const API = import.meta.env.VITE_API_URL;
+import apiClient from "../../api/apiClient";
 
 const UpdateProduct = () => {
   const { id } = useParams(); // Get product ID from URL
@@ -57,7 +53,7 @@ const UpdateProduct = () => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${API}/products/${id}`);
+        const response = await apiClient.get(`/products/${id}`);
         const product = response.data;
 
         // Pre-fill form with existing data
@@ -166,8 +162,8 @@ const UpdateProduct = () => {
     });
 
     try {
-      await axios.put(
-        `${API}/products/${id}`,
+      await apiClient.put(
+        `/products/${id}`,
         formDataToSend,
         {
           headers: {

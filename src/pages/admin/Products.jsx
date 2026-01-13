@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import apiClient from "../../api/apiClient";
 import {
   Plus,
   Edit,
@@ -11,10 +11,6 @@ import {
   AlertCircle,
   Loader
 } from "lucide-react";
-
-// In this environment, we'll use a placeholder for the API URL.
-// In your actual project, this should be configured in your .env file.
-const API = import.meta.env.VITE_API_URL;
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,7 +29,7 @@ const Products = () => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`${API}/products`);
+      const res = await apiClient.get('/products');
       setProducts(res.data);
       setError(null);
     } catch (error) {
@@ -64,7 +60,7 @@ const Products = () => {
 
     try {
       // Assuming your backend uses _id for the unique identifier
-      await axios.delete(`${API}/products/${productToDelete}`);
+      await apiClient.delete(`/products/${productToDelete}`);
       setProducts((prev) => prev.filter((p) => p._id !== productToDelete));
       closeDeleteModal();
     } catch (error) {

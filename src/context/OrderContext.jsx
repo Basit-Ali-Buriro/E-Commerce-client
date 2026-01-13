@@ -1,10 +1,9 @@
 // src/context/OrderContext.jsx
 import React, { createContext, useContext, useState } from "react";
-import axios from "axios";
+import apiClient from "../api/apiClient";
 import { useAuth } from "./AuthContext";
 
 const OrderContext = createContext();
-const API = import.meta.env.VITE_API_URL || "";
 
 export const OrderProvider = ({ children }) => {
   const { isAuthenticated, logout } = useAuth(); // optional logout
@@ -12,22 +11,11 @@ export const OrderProvider = ({ children }) => {
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const getTokenHeader = () => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      console.error("No auth token found in localStorage");
-      return null;
-    }
-    return { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
-  };
-
   const fetchMyOrders = async () => {
     if (!isAuthenticated) return;
     setLoading(true);
     try {
-      const headers = getTokenHeader();
-      if (!headers) return;
-      const res = await axios.get(`${API}/orders/myorders`, { headers });
+      const res = await apiClient.get('/orders/myorders');
       setMyOrders(res.data);
     } catch (err) {
       console.error("Error fetching orders:", err.response?.data ?? err.message);
@@ -40,9 +28,7 @@ export const OrderProvider = ({ children }) => {
     if (!isAuthenticated) return;
     setLoading(true);
     try {
-      const headers = getTokenHeader();
-      if (!headers) return;
-      const res = await axios.get(`${API}/orders/${id}`, { headers });
+      const res = await apiClient.get(`/orders/${id}`);
       setOrderDetails(res.data);
     } catch (err) {
       console.error("Error fetching order:", err.response?.data ?? err.message);
@@ -58,9 +44,7 @@ export const OrderProvider = ({ children }) => {
     }
     setLoading(true);
     try {
-      const headers = getTokenHeader();
-      if (!headers) return null;
-      const res = await axios.post(`${API}/orders`, orderData, { headers });
+      const res = await apiClient.post('/orders', orderData);
       return res.data;
     } catch (err) {
       if (err.response?.status === 401) {
@@ -79,9 +63,7 @@ export const OrderProvider = ({ children }) => {
     if (!isAuthenticated) return null;
     setLoading(true);
     try {
-      const headers = getTokenHeader();
-      if (!headers) return null;
-      const res = await axios.put(`${API}/orders/${orderId}/pay`, paymentResult, { headers });
+      const res = await apiClient.put(`/orders/${orderId}/pay`, paymentResult);
       return res.data;
     } catch (err) {
       console.error("Error paying order:", err.response?.data ?? err.message);
@@ -95,9 +77,7 @@ export const OrderProvider = ({ children }) => {
     if (!isAuthenticated) return null;
     setLoading(true);
     try {
-      const headers = getTokenHeader();
-      if (!headers) return null;
-      const res = await axios.put(`${API}/orders/${orderId}/cancel`, {}, { headers });
+      const res = await apiClient.put(`/orders/${orderId}/cancel`, {});
       return res.data;
     } catch (err) {
       console.error("Error cancelling order:", err.response?.data ?? err.message);

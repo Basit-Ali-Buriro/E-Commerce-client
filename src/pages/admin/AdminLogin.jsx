@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Lock, Mail, Eye, EyeOff, Shield } from 'lucide-react';
-import axios from 'axios';
+import apiClient from '../../api/apiClient';
 import { useNavigate } from 'react-router-dom';
-
-// const API = import.meta.env.VITE_API_URL;
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -19,10 +17,9 @@ const handleSubmit = async (e) => {
 
   try {
     console.log("Logging in with:", { email, password });
-    const { data } = await axios.post(
-      "http://localhost:5000/api/users/login",
-      { email, password },
-      { headers: { "Content-Type": "application/json" } }
+    const { data } = await apiClient.post(
+      "/users/login",
+      { email, password }
     );
     console.log(data);
 
@@ -34,7 +31,6 @@ const handleSubmit = async (e) => {
     if (data.user?.isAdmin) {
       // Save admin info and token
       localStorage.setItem("adminInfo", JSON.stringify(data));
-      axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
 
       navigate("/admin/dashboard");
     } else {
