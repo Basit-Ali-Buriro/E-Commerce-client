@@ -34,6 +34,7 @@ function AppContent() {
   
   // All routes that start with "/admin"
   const isAdminRoute = location.pathname.startsWith("/admin");
+  console.log(import.meta.env.VITE_API_URL);
   
   return (
     <>
