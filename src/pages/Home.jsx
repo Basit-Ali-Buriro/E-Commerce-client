@@ -8,7 +8,7 @@ import { useProducts } from '../context/ProductContext'; // ✅ Import your hook
 function Home() {
   const { products, loading, error } = useProducts(); // ✅ Get products from context
   
-  // console.log(products);
+
   
 
   // Show loading and error states
@@ -22,7 +22,7 @@ function Home() {
 
   // If you want only new collections, you can filter
   const newCollectionProducts = products.slice(0, 4); // Example: first 4 products
-  console.log(newCollectionProducts);
+
   
   return (
     <div>

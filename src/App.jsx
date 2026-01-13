@@ -31,18 +31,18 @@ import Customer from "./pages/admin/Customer";
 
 function AppContent() {
   const location = useLocation();
-  
+
   // All routes that start with "/admin"
   const isAdminRoute = location.pathname.startsWith("/admin");
-  console.log(import.meta.env.VITE_API_URL);
-  
+  // console.log(import.meta.env.VITE_API_URL);
+
   return (
     <>
       <ScrollToTop />
-      
+
       {/* Show Navbar/Footer only if not on admin route */}
       {!isAdminRoute && <Navbar />}
-      
+
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           {/* Public Routes */}
@@ -58,17 +58,17 @@ function AppContent() {
           <Route path="/checkout" element={<CheckOutPage />} />
           <Route path="/success" element={<PaymentSuccess />} />
           <Route path="/cancel" element={<PaymentCancel />} />
-          
+
           {/* Admin Auth Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/signup" element={<AdminSignup />} />
-          
+
           {/* Protected Admin Panel Routes */}
           <Route
             path="/admin"
             element={
               // <ProtectedAdminRoute>
-                <AdminLayout />
+              <AdminLayout />
               //  </ProtectedAdminRoute>
             }
           >
@@ -81,7 +81,7 @@ function AppContent() {
           </Route>
         </Routes>
       </AnimatePresence>
-      
+
       {!isAdminRoute && <Footer />}
     </>
   );

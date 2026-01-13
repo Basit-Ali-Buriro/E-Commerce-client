@@ -6,7 +6,7 @@ const NewsletterSection = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle subscription logic here
-    console.log('Submitted email:', email);
+    // console.log('Submitted email:', email);
   };
 
   return (
@@ -18,7 +18,7 @@ const NewsletterSection = () => {
       </h1>
 
       {/* Email Input */}
-      <form 
+      <form
         onSubmit={handleSubmit}
         className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md"
       >

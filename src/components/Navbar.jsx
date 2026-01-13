@@ -15,12 +15,12 @@ function Navbar() {
   const { cartItems } = useCart();
   const { isAuthenticated, logout } = useAuth();
   const { wishlistItems } = useWishlist(); // Get wishlist items from context
-  
+
   const cartLength = Object.values(cartItems).reduce(
     (total, item) => total + (item.qty || 1),
     0
   );
-  
+
   // Calculate wishlist items count
   const wishlistLength = wishlistItems.length;
 
@@ -56,9 +56,8 @@ function Navbar() {
 
   return (
     <nav
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/95 backdrop-blur-sm shadow-lg" : "bg-white shadow-md"
-      }`}
+      className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-sm shadow-lg" : "bg-white shadow-md"
+        }`}
     >
       {/* Announcement bar */}
       <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center py-1.5 text-sm">
@@ -85,11 +84,10 @@ function Navbar() {
               <Link
                 key={link.name}
                 to={link.path}
-                className={`relative px-1 py-2 font-medium ${
-                  location.pathname === link.path
+                className={`relative px-1 py-2 font-medium ${location.pathname === link.path
                     ? "text-indigo-600"
                     : "text-gray-700 hover:text-black"
-                } transition-colors`}
+                  } transition-colors`}
               >
                 {link.name}
                 {location.pathname === link.path && (
@@ -102,11 +100,10 @@ function Navbar() {
           {/* Desktop Icons */}
           <div className="hidden md:flex items-center space-x-6">
             {/* Search */}
-            <form 
+            <form
               onSubmit={handleSearch}
-              className={`relative flex items-center transition-all duration-300 ${
-                isSearchFocused ? "w-64" : "w-40"
-              }`}
+              className={`relative flex items-center transition-all duration-300 ${isSearchFocused ? "w-64" : "w-40"
+                }`}
             >
               <input
                 type="text"
@@ -129,11 +126,10 @@ function Navbar() {
             <div className="group relative">
               <Link
                 to="/account"
-                className={`p-2 transition-colors ${
-                  isAuthenticated 
-                    ? "text-green-600 hover:text-green-700" 
+                className={`p-2 transition-colors ${isAuthenticated
+                    ? "text-green-600 hover:text-green-700"
                     : "text-gray-700 hover:text-indigo-600"
-                }`}
+                  }`}
               >
                 {isAuthenticated ? (
                   <UserCheck className="h-5 w-5" />
@@ -141,7 +137,7 @@ function Navbar() {
                   <User className="h-5 w-5" />
                 )}
               </Link>
-              
+
               {/* Account dropdown */}
               {isAuthenticated && (
                 <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
@@ -207,7 +203,7 @@ function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t">
+        <div className="md:hidden absolute top-full left-0 w-full bg-white border-t shadow-lg z-40">
           <div className="px-4 py-3">
             {/* Mobile Search */}
             <form onSubmit={handleSearch} className="flex mb-4">
@@ -225,39 +221,37 @@ function Navbar() {
                 <Search className="h-5 w-5" />
               </button>
             </form>
-            
+
             {/* Mobile Nav Links */}
             <div className="space-y-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`block px-4 py-2 rounded-lg ${
-                    location.pathname === link.path
+                  className={`block px-4 py-2 rounded-lg ${location.pathname === link.path
                       ? "bg-indigo-50 text-indigo-700"
                       : "text-gray-700 hover:bg-gray-100"
-                  }`}
+                    }`}
                 >
                   {link.name}
                 </Link>
               ))}
-              
+
               {/* Account Links */}
               <div className="border-t pt-2 mt-2">
                 <Link
                   to="/account"
-                  className={`flex items-center px-4 py-2 rounded-lg ${
-                    location.pathname === "/account"
+                  className={`flex items-center px-4 py-2 rounded-lg ${location.pathname === "/account"
                       ? "bg-indigo-50 text-indigo-700"
                       : "text-gray-700 hover:bg-gray-100"
-                  }`}
+                    }`}
                 >
                   <span className="mr-2">
                     {isAuthenticated ? <UserCheck className="h-5 w-5" /> : <User className="h-5 w-5" />}
                   </span>
                   {isAuthenticated ? "My Account" : "Sign In"}
                 </Link>
-                
+
                 {isAuthenticated && (
                   <>
                     <Link
@@ -274,7 +268,7 @@ function Navbar() {
                     </button>
                   </>
                 )}
-                
+
                 <Link
                   to="/wishlist"
                   className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100"
@@ -282,7 +276,7 @@ function Navbar() {
                   <Heart className="h-5 w-5 mr-2" />
                   Wishlist {wishlistLength > 0 && `(${wishlistLength})`}
                 </Link>
-                
+
                 <Link
                   to="/cart"
                   className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100"

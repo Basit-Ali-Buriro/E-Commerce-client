@@ -11,38 +11,38 @@ const AdminLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsLoading(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-  try {
-    console.log("Logging in with:", { email, password });
-    const { data } = await apiClient.post(
-      "/users/login",
-      { email, password }
-    );
-    console.log(data);
+    try {
+      // console.log("Logging in with:", { email, password });
+      const { data } = await apiClient.post(
+        "/users/login",
+        { email, password }
+      );
+      // console.log(data);
 
-    if (!data || !data.token) {
-      throw new Error("Invalid server response.");
+      if (!data || !data.token) {
+        throw new Error("Invalid server response.");
+      }
+
+      // Check isAdmin inside data.user
+      if (data.user?.isAdmin) {
+        // Save admin info and token
+        localStorage.setItem("adminInfo", JSON.stringify(data));
+
+        navigate("/admin/dashboard");
+      } else {
+        alert("Access denied. You are not an admin.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert(error.response?.data?.message || error.message || "Login failed.");
+    } finally {
+      setIsLoading(false);
     }
-
-    // Check isAdmin inside data.user
-    if (data.user?.isAdmin) {
-      // Save admin info and token
-      localStorage.setItem("adminInfo", JSON.stringify(data));
-
-      navigate("/admin/dashboard");
-    } else {
-      alert("Access denied. You are not an admin.");
-    }
-  } catch (error) {
-    console.error("Login error:", error);
-    alert(error.response?.data?.message || error.message || "Login failed.");
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
 
 
@@ -136,9 +136,8 @@ const handleSubmit = async (e) => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full flex justify-center items-center ${
-                  isLoading ? 'bg-indigo-400' : 'bg-indigo-600 hover:bg-indigo-700'
-                } text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300`}
+                className={`w-full flex justify-center items-center ${isLoading ? 'bg-indigo-400' : 'bg-indigo-600 hover:bg-indigo-700'
+                  } text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300`}
               >
                 {isLoading ? (
                   <>
