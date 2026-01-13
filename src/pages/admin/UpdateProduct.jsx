@@ -155,9 +155,9 @@ const UpdateProduct = () => {
         }
       }
     });
-    
+
     // Append the gallery images separately
-    formData.galleryImages.forEach((imageFile, index) => {
+    formData.galleryImages.forEach((imageFile) => {
       formDataToSend.append(`images`, imageFile);
     });
 
@@ -262,33 +262,30 @@ const UpdateProduct = () => {
         </div>
         <div className="flex gap-2">
           <button
-            className={`px-4 py-2 rounded-lg ${
-              activeTab === "basic"
+            className={`px-4 py-2 rounded-lg ${activeTab === "basic"
                 ? "bg-blue-100 text-blue-600 font-medium"
                 : "text-gray-600 hover:bg-gray-100"
-            }`}
+              }`}
             type="button"
             onClick={() => setActiveTab("basic")}
           >
             Basic Info
           </button>
           <button
-            className={`px-4 py-2 rounded-lg ${
-              activeTab === "details"
+            className={`px-4 py-2 rounded-lg ${activeTab === "details"
                 ? "bg-blue-100 text-blue-600 font-medium"
                 : "text-gray-600 hover:bg-gray-100"
-            }`}
+              }`}
             type="button"
             onClick={() => setActiveTab("details")}
           >
             Details
           </button>
           <button
-            className={`px-4 py-2 rounded-lg ${
-              activeTab === "media"
+            className={`px-4 py-2 rounded-lg ${activeTab === "media"
                 ? "bg-blue-100 text-blue-600 font-medium"
                 : "text-gray-600 hover:bg-gray-100"
-            }`}
+              }`}
             type="button"
             onClick={() => setActiveTab("media")}
           >
@@ -308,9 +305,8 @@ const UpdateProduct = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border-b-2 focus:border-blue-500 focus:outline-none peer ${
-                    errors.name ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-4 py-3 border-b-2 focus:border-blue-500 focus:outline-none peer ${errors.name ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder=" "
                 />
                 <label className="absolute left-0 -top-3.5 text-sm text-gray-600 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-blue-500">
@@ -330,9 +326,8 @@ const UpdateProduct = () => {
                   value={formData.description}
                   onChange={handleChange}
                   rows={4}
-                  className={`w-full px-4 py-3 border-b-2 focus:border-blue-500 focus:outline-none peer resize-none ${
-                    errors.description ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full px-4 py-3 border-b-2 focus:border-blue-500 focus:outline-none peer resize-none ${errors.description ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder=" "
                 ></textarea>
                 <label className="absolute left-0 -top-3.5 text-sm text-gray-600 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-blue-500">
@@ -350,9 +345,8 @@ const UpdateProduct = () => {
                   type="number"
                   value={formData.price}
                   onChange={handleChange}
-                  className={`w-full pl-8 pr-4 py-3 border-b-2 focus:border-blue-500 focus:outline-none ${
-                    errors.price ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className={`w-full pl-8 pr-4 py-3 border-b-2 focus:border-blue-500 focus:outline-none ${errors.price ? "border-red-500" : "border-gray-300"
+                    }`}
                   placeholder="Price"
                 />
               </div>
@@ -493,11 +487,10 @@ const UpdateProduct = () => {
                         onChange={(e) =>
                           handleSizeChange(index, "stock", e.target.value)
                         }
-                        className={`w-full px-3 py-2 border ${
-                          errors[`size-${index}`]
+                        className={`w-full px-3 py-2 border ${errors[`size-${index}`]
                             ? "border-red-500"
                             : "border-gray-300"
-                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                          } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
                         placeholder="Stock"
                       />
                       {errors[`size-${index}`] && (
@@ -530,7 +523,7 @@ const UpdateProduct = () => {
               <h3 className="text-lg font-medium text-gray-800 mb-3">
                 Main Image
               </h3>
-              
+
               {/* Current main image */}
               {existingMainImage && !formData.image && (
                 <div className="mb-4">
@@ -562,7 +555,7 @@ const UpdateProduct = () => {
                   onChange={handleMainImageUpload}
                 />
               </div>
-              
+
               {formData.image && (
                 <div className="mt-4">
                   <div className="text-sm text-gray-500 mb-2">New Image Preview:</div>
@@ -582,7 +575,7 @@ const UpdateProduct = () => {
               <h3 className="text-lg font-medium text-gray-800 mb-3">
                 Gallery Images
               </h3>
-              
+
               <div className="flex flex-wrap gap-4">
                 {/* Existing gallery images */}
                 {existingGalleryImages.map((imageUrl, index) => (

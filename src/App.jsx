@@ -28,6 +28,8 @@ import CreateProduct from "./pages/admin/CreateProduct";
 import UpdateProduct from "./pages/admin/UpdateProduct"; // Import UpdateProduct component
 import ProtectedAdminRoute from "./pages/admin/ProtectedAdminRoute";
 import Customer from "./pages/admin/Customer";
+import Analytics from "./pages/admin/Analytics";
+import Settings from "./pages/admin/Settings";
 
 function AppContent() {
   const location = useLocation();
@@ -78,6 +80,8 @@ function AppContent() {
             <Route path="create-product" element={<CreateProduct />} />
             <Route path="update-product/:id" element={<UpdateProduct />} />
             <Route path="customers" element={<Customer />} />
+            <Route path="analytics" element={<Analytics />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
         </Routes>
       </AnimatePresence>
