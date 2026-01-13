@@ -39,6 +39,18 @@ function Navbar() {
     setMobileMenuOpen(false);
   }, [location]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { name: "Shop", path: "/" },
     { name: "Men", path: "/men" },
@@ -85,8 +97,8 @@ function Navbar() {
                 key={link.name}
                 to={link.path}
                 className={`relative px-1 py-2 font-medium ${location.pathname === link.path
-                    ? "text-indigo-600"
-                    : "text-gray-700 hover:text-black"
+                  ? "text-indigo-600"
+                  : "text-gray-700 hover:text-black"
                   } transition-colors`}
               >
                 {link.name}
@@ -127,8 +139,8 @@ function Navbar() {
               <Link
                 to="/account"
                 className={`p-2 transition-colors ${isAuthenticated
-                    ? "text-green-600 hover:text-green-700"
-                    : "text-gray-700 hover:text-indigo-600"
+                  ? "text-green-600 hover:text-green-700"
+                  : "text-gray-700 hover:text-indigo-600"
                   }`}
               >
                 {isAuthenticated ? (
@@ -203,7 +215,7 @@ function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white border-t shadow-lg z-40">
+        <div className="md:hidden absolute top-full left-0 w-full h-[calc(100vh-100%)] bg-white border-t shadow-lg z-40 overflow-y-auto pb-20">
           <div className="px-4 py-3">
             {/* Mobile Search */}
             <form onSubmit={handleSearch} className="flex mb-4">
@@ -229,8 +241,8 @@ function Navbar() {
                   key={link.name}
                   to={link.path}
                   className={`block px-4 py-2 rounded-lg ${location.pathname === link.path
-                      ? "bg-indigo-50 text-indigo-700"
-                      : "text-gray-700 hover:bg-gray-100"
+                    ? "bg-indigo-50 text-indigo-700"
+                    : "text-gray-700 hover:bg-gray-100"
                     }`}
                 >
                   {link.name}
@@ -242,8 +254,8 @@ function Navbar() {
                 <Link
                   to="/account"
                   className={`flex items-center px-4 py-2 rounded-lg ${location.pathname === "/account"
-                      ? "bg-indigo-50 text-indigo-700"
-                      : "text-gray-700 hover:bg-gray-100"
+                    ? "bg-indigo-50 text-indigo-700"
+                    : "text-gray-700 hover:bg-gray-100"
                     }`}
                 >
                   <span className="mr-2">
