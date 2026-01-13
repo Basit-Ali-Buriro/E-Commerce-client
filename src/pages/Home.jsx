@@ -1,7 +1,7 @@
 import React from 'react';
 import HeroSection from '../components/HeroSection';
 import NewCollections from '../components/NewCollections';
-import NewsletterSection from '../components/NewsLetterSection';
+import NewsletterSection from '../components/NewsletterSection';
 import PageWrapper from '../components/PageWrapper';
 import { useProducts } from '../context/ProductContext'; // ✅ Import your hook
 
